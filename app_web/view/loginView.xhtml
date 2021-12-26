@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rpx="http://java.sun.com/jsf/composite/componentes"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<title>#{build.TITULO_APP}</title>
+	<h:outputStylesheet name="loginstyle.css" library="css" />
+	<h:outputScript name="rexpress.js" library="js" />
+	<script type="text/javascript" src="../resources/js/common.js" />
+</h:head>
+<h:panelGrid columns="1" styleClass="panel" id="logingrid">
+	<f:view locale="#{configapp.idiomaDefecto}">
+	#{msg.version_idioma}
+		<rpx:lineaComponet />
+		<rpx:loginComponet passNameLabel="#{build.label_password}"
+			correoNameLabel="#{build.label_correo}"
+			botonNameLabel="#{build.btn_login}" correoValue="#{loginbean.correo}"
+			passValue="#{loginbean.password}"
+			botonAction="#{logincontroller.aceptar}" />
+
+		<h:form id="form_Login_combo">
+			<p:selectOneMenu id="selectIdiomas" value="#{loginbean.idioma}"
+				style="width:50px" label="Seleccionar idiooma">
+				<f:selectItems value="#{loginbean.idiomas}" />
+				<p:ajax event="itemSelect" update=":logingrid"
+					process="selectIdiomas" />
+			</p:selectOneMenu>
+		</h:form>
+	</f:view>
+</h:panelGrid>
+</html>

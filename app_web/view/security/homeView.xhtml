@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rpx="http://java.sun.com/jsf/composite/componentes"
+	xmlns:t="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>#{build.TITULO_APP}</title>
+	<h:outputStylesheet name="loginstyle.css" library="css"></h:outputStylesheet>
+	<style type="text/css">
+.table_menu_list {
+	margin: 0 auto;
+}
+</style>
+</h:head>
+<h:form id="formHome">
+	<f:view locale="#{configapp.idiomaDefecto}">
+		<h:panelGrid columns="1" id="home_panel">
+			<rpx:barraComponet labelTitulo="#{build.titulo_home}" />
+			<p:spacer />
+			<h:panelGrid columns="1" styleClass="panel">
+				<h:panelGrid>
+					<p:row>
+						<p:column>
+							<h:outputText value="Filtrar: " />
+						</p:column>
+						<p:column>
+							<p:inputText id="counter" value="#{homebean.buscador}">
+								<p:ajax event="keyup" update="out" />
+							</p:inputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText id="out" value="#{homebean.buscador}" />
+						</p:column>
+					</p:row>
+				</h:panelGrid>
+				<rpx:lineaComponet />
+				<p:panelGrid columns="1">
+					<p:row>
+						<p:column colspan="2" style="Width:70%">
+							<p:dataTable var="usu"
+								value="#{homecontroller.listaUsuariosBean}"
+								scrollable="true" scrollHeight="50">
+								<f:facet name="header">#{build.titulo_tabla_usuarios}</f:facet>
+								<p:column headerText="Nombe">
+									<h:outputText value="#{usu.nombre}" />
+								</p:column>
+								<p:column headerText="Apellido">
+									<h:outputText value="#{usu.apellido}" />
+								</p:column>
+								<p:column headerText="Correo">
+									<h:outputText value="#{usu.correo}" />
+								</p:column>
+							</p:dataTable>
+						</p:column>
+						<p:column rowspan="1">
+
+
+
+
+
+
+
+
+
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</h:panelGrid>
+			<p:commandLink value="cerrar"
+				action="#{homecontroller.cerrarSesion}" 
+				global="false"
+				ajax="false" />
+		</h:panelGrid>
+	</f:view>
+</h:form>
+</html>
