@@ -27,6 +27,18 @@
 			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-deploy-plugin</artifactId> 
 				<version>3.0.0-M1</version> </plugin> -->
 		</plugins>
+		<resources>
+			<resource>
+				<directory>resources</directory>
+				<includes>
+					<include>**/*.properties</include>
+					<include>**/*.xml</include>
+					<include>**/*.tld</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+
 	</build>
 	<dependencies>
 
