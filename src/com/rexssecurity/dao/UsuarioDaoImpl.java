@@ -28,43 +28,12 @@ public class UsuarioDaoImpl extends CommonDaoImpl<Usuario, Integer> implements U
 
 	
 	@Override
-	public void create(Usuario entity) {
+	public void altaUsuario(Usuario entity) {
 		
-		try {
-		EntityManager ent = getEntityManager();
-			ent.getTransaction().begin();
-			ent.persist(entity);
-			ent.getTransaction().commit();
-			ent.close();
-		} catch (Exception err) {
-//			// if (logger.isDebugEnabled()) {
-//			// logger.debug("Error code: "+err.getErrorCode());
-//			// logger.debug("SQLState: "+err.getSQLState());
-//			// if (err.getSQLException()!=null) {
-//			// logger.debug("SQLException: "+err.getSQLException());
-//			// }
-//			// logger.debug("SQL: "+err.getSQL());
-//			// }
-		}
+		create(entity);
 
 	}
-
-	@Override
-	public void crearUsuari(Usuario usuario) {
-		try {
-			Session sesion = getSessionManager();
-
-			Transaction tran = sesion.beginTransaction();
-			sesion.save(usuario);
-			tran.commit();
-			sesion.close();
-
-		} catch (Exception err) {
-
-		}
-
-	}
-
+	
 	@Override
 	public List userQueryCorreo(UserBean usuariobean) {
 		
@@ -74,9 +43,9 @@ public class UsuarioDaoImpl extends CommonDaoImpl<Usuario, Integer> implements U
 	}
 
 	@Override
-	public List<Usuario> usersQuery(String fitro, String valor) {
+	public List usersQuery(String fitro, String valor) {
 		// TODO Auto-generated method stub
-		List listaUsuarios=null;
+		List<Usuario> listaUsuarios=null;
 		try{
 	     listaUsuarios=createNamedQuery("Usuario.findByRole").setParameter("role",Role.USU).getResultList();
 		}catch (Exception e) {
@@ -86,6 +55,15 @@ public class UsuarioDaoImpl extends CommonDaoImpl<Usuario, Integer> implements U
 		}
 	    //List listaUsuarios=(List) createHQLQuery("SELECT * FROM test.usuario WHERE tipo=USU");
 
+		return listaUsuarios;
+	}
+
+
+	@Override
+	public List listaUsuarios() {
+		// TODO Auto-generated method stub
+		List<Usuario> listaUsuarios=createNamedQuery("Usuario.list").getResultList();
+		getEntityManager().close();
 		return listaUsuarios;
 	}
 

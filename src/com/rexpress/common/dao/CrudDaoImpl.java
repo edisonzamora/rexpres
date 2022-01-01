@@ -9,11 +9,18 @@ import org.springframework.stereotype.Repository;
 @Repository
 public abstract class CrudDaoImpl<ENTITY, PK> implements CrudDao<ENTITY, PK>  {
 
+	/** 
+	 * 
+	 * **/
 	protected abstract EntityManager getEntityManager() ;
 	
+	/**
+	 * delega la conececcion a gestor de sesiones de hibernate
+	 * 
+	 * **/
+	protected abstract Session getSessionManager() ;
 	
 	/**
-	 * 
 	 * metodo de la interface implementadao 
 	 * convertida abract para gestinarla en la implementacion common
 	 * **/
@@ -21,11 +28,6 @@ public abstract class CrudDaoImpl<ENTITY, PK> implements CrudDao<ENTITY, PK>  {
 	
 	
 	
-	/**
-	 * delega laconececcion a gestor de sesiones de hibernate
-	 * 
-	 * **/
-	protected abstract Session getSessionManager() ;
 	
 	
 	protected Query createNamedQuery(String name) {
@@ -39,5 +41,15 @@ public abstract class CrudDaoImpl<ENTITY, PK> implements CrudDao<ENTITY, PK>  {
 	protected Query createNativeQuery(String query) {
 		return getEntityManager().createNativeQuery(query);
 	}
-
+	
+	protected void create(ENTITY valor)throws IllegalStateException {
+			    EntityManager ent = getEntityManager();
+				ent.getTransaction().begin();
+				ent.persist(valor);
+				ent.getTransaction().commit();
+				ent.close();	 
+	}
+	protected void create2(ENTITY valor)throws IllegalStateException {
+	    	 
+}
 }

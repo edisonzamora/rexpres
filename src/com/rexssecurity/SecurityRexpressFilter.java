@@ -1,4 +1,4 @@
-package com.rexssecurity;
+	package com.rexssecurity;
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -73,7 +73,7 @@ public class SecurityRexpressFilter implements Filter {
 			 String key = headers.nextElement();
 			 logger.debug(key + "<-- " + req.getHeader(key));
 			 }
-			res.sendRedirect("/Rexpress/view/loginView.xhtml");
+			res.sendRedirect("/Rexpres/view/loginView.xhtml");
 			// RequestDispatcher rsdpc = null;
 			// rsdpc = req.getRequestDispatcher("homeView.xhtml");
 			// rsdpc.forward(req, res);

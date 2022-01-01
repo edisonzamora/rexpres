@@ -1,13 +1,15 @@
 package com.rexpress.beans;
 
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
+import com.rexpress.constant.BeansName;
 import com.rexssecurity.Role;
 
 
-@Component("userbean")
-@Scope(value = WebApplicationContext.SCOPE_APPLICATION)
+@Component(BeansName.BEAN_USERBEAN)
+@Scope(value = WebApplicationContext.SCOPE_SESSION)
 public class UserBean {
 	
 	public UserBean(){}

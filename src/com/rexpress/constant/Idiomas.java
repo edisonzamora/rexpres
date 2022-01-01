@@ -1,4 +1,4 @@
-package com.rexpress.constants;
+package com.rexpress.constant;
 
 public enum Idiomas {
 	ES("es"), EN("en");

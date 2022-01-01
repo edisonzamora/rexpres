@@ -15,7 +15,7 @@ public class RexUtil {
 		return idiomasNavegador(navIdiona);
 	}
 
-	public static List<String> idiomasNavegador(String indiomas) {
+	private static List<String> idiomasNavegador(String indiomas) {
 
 		ArrayList<String> listaPrefijo = new ArrayList<>();
 
@@ -32,4 +32,11 @@ public class RexUtil {
 
 		return listaPrefijo;
 	}
+	
+	
+	public static FacesContext fcCuCurrentInstance(){
+		return FacesContext.getCurrentInstance();
+	}
+	
+	
 }

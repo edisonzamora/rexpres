@@ -13,8 +13,8 @@ import com.rexssecurity.entitys.Usuario;
 
 @Service("UsuarioService")
 @Configurable
-public class UsuarioServiceImp extends CrudServiceImp implements UsuaioService{
-	
+public class UsuarioServiceImp extends CrudServiceImp implements UsuaioService {
+
 	@Autowired
 	private UsuarioDao usuariodao;
 
@@ -23,14 +23,12 @@ public class UsuarioServiceImp extends CrudServiceImp implements UsuaioService{
 		// TODO Auto-generated method stub
 		return (CrudDao) usuariodao;
 	}
-	
-	
 
 	@Override
 	public UserBean usuarioToUserbean(UserBean user, Usuario entity) {
 		/*
 		 * cambia la entidad a usuarioBean
-		 * */
+		 */
 		user.setIdusuario(entity.getIdusuario());
 		user.setNombre(entity.getNombre());
 		user.setApellido(entity.getApellido());
@@ -45,7 +43,7 @@ public class UsuarioServiceImp extends CrudServiceImp implements UsuaioService{
 	public Usuario userBeanToUsuario(Usuario entity, UserBean user) {
 		/*
 		 * cambia de userBean a Entity
-		 * */
+		 */
 		entity.setIdusuario(user.getIdusuario());
 		entity.setNombre(user.getNombre());
 		entity.setApellido(user.getApellido());
@@ -56,33 +54,56 @@ public class UsuarioServiceImp extends CrudServiceImp implements UsuaioService{
 		return entity;
 	}
 
-
-
 	@Override
 	public UserBean UsuarioByCorreo(UserBean userBean) {
-		List<Usuario>usuriosList=usuariodao.userQueryCorreo(userBean);
-		if(!usuriosList.isEmpty()){
-			if(usuriosList.size()==1){
-				usuarioToUserbean(userBean,usuriosList.get(0));
+		List<Usuario> usuriosList = usuariodao.userQueryCorreo(userBean);
+		if (!usuriosList.isEmpty()) {
+			if (usuriosList.size() == 1) {
+				usuarioToUserbean(userBean, usuriosList.get(0));
 				return userBean;
-				
-			}else{
-				userBean=null;
+
+			} else {
+				userBean = null;
 				return userBean;
 			}
 		}
-		userBean=null;
+		userBean = null;
 		return userBean;
-		
+
 	}
 
 	@Override
 	public ArrayList<UserBean> usuariosByTipo(String fitro, String valor) {
 		// TODO Auto-generated method stub
-		ArrayList<Usuario>usuarios=(ArrayList<Usuario>) usuariodao.usersQuery(fitro, valor);
-		ArrayList<UserBean>usuariosbean=new ArrayList<>();
-	    for (Usuario varia : usuarios) {
-	    	UserBean user=new UserBean();
+		ArrayList<Usuario> usuarios = (ArrayList<Usuario>) usuariodao.usersQuery(fitro, valor);
+		ArrayList<UserBean> usuariosbean = new ArrayList<>();
+		for (Usuario varia : usuarios) {
+			UserBean user = new UserBean();
+			usuarioToUserbean(user, varia);
+			usuariosbean.add(usuarioToUserbean(user, varia));
+		}
+		return usuariosbean;
+	}
+
+	@Override
+	public UserBean crearUsuario(Usuario entity) {
+		// TODO Auto-generated method stub
+		try {
+			usuariodao.altaUsuario(entity);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public ArrayList<UserBean> listaUsuarios() {
+
+		ArrayList<Usuario> usuarios = (ArrayList<Usuario>) usuariodao.listaUsuarios();
+		ArrayList<UserBean> usuariosbean = new ArrayList<>();
+		for (Usuario varia : usuarios) {
+			UserBean user = new UserBean();
 			usuarioToUserbean(user, varia);
 			usuariosbean.add(usuarioToUserbean(user, varia));
 		}

@@ -24,10 +24,13 @@ public abstract class CommonDaoImpl<ENTITY, PK> extends CrudDaoImpl<ENTITY, PK>{
 		try {
 
 			emf = Persistence.createEntityManagerFactory("rexpressPU");
-
+			
+			
+			
 		} catch (PersistenceException e) {
 			
-			logger.debug(e.getMessage());
+			logger.error(e.getMessage());
+			logger.error(e.getCause());
 
 		} finally {
 			logger.debug("Controlando coneccion");
@@ -36,9 +39,8 @@ public abstract class CommonDaoImpl<ENTITY, PK> extends CrudDaoImpl<ENTITY, PK>{
 	}
 
 	@Override
-	protected EntityManager getEntityManager() {
-		em = emf.createEntityManager();
-		logger.debug(">>>>>>>Creando EntityManager Static");
+	protected EntityManager getEntityManager() throws IllegalStateException{
+		EntityManager em = emf.createEntityManager();
 		return em;
 	}
 	

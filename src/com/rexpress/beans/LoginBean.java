@@ -3,17 +3,19 @@ package com.rexpress.beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 import com.config.ConfigApp;
-import com.rexpress.constants.BeansName;
+import com.rexpress.common.utils.RexUtil;
+import com.rexpress.constant.BeansName;
 
 
 @Component(BeansName.BEAN_LOGINBEAN)
-@Scope(value = WebApplicationContext.SCOPE_SESSION)
+@Scope(value = WebApplicationContext.SCOPE_APPLICATION)
 public class LoginBean implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -38,8 +40,7 @@ public class LoginBean implements Serializable {
 		this.idiomas = idiomas;
 	}
 	private ArrayList<SelectItem> listIdioma() {
-		configApp.getLisNavIdia();
-		return arrayListToSelectetList(configApp.getLisNavIdia());
+		return arrayListToSelectetList(getIdiomasNavegador());
 	}
 	public String getIdioma() {
 		return idioma;
@@ -71,6 +72,14 @@ public class LoginBean implements Serializable {
 		}
 		return listSelectet;
 	}
-	
+	/**
+	 * devuelve lista de los idiomas del navegador
+	 * 
+	 * */
+	private ArrayList<String> getIdiomasNavegador() {
+		FacesContext fct = RexUtil.fcCuCurrentInstance();
+		ArrayList<String>lista=(ArrayList<String>) RexUtil.idiomasNavegador(fct);
+		return lista;
+	}
 	
 }

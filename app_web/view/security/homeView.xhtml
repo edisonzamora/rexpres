@@ -33,49 +33,52 @@
 							</p:inputText>
 						</p:column>
 					</p:row>
+					
 					<p:row>
 						<p:column>
 							<h:outputText id="out" value="#{homebean.buscador}" />
 						</p:column>
+						<p:column>
+							<h:outputText id="out_usuario" value="#{homebean.userBeanHome.nombre}" />
+					</p:column>
+					</p:row>
+					<p:row>
+					
 					</p:row>
 				</h:panelGrid>
 				<rpx:lineaComponet />
 				<p:panelGrid columns="1">
-					<p:row>
-						<p:column colspan="2" style="Width:70%">
-							<p:dataTable var="usu"
-								value="#{homecontroller.listaUsuariosBean}"
-								scrollable="true" scrollHeight="50">
+					<p:row style="height:600px" >
+						<p:column colspan="2" style="height:300px">
+							<p:dataTable var="usuarioBean"
+								value="#{homecontroller.listaUsuariosBean}" scrollable="true"
+								scrollHeight="100%">
 								<f:facet name="header">#{build.titulo_tabla_usuarios}</f:facet>
+								<p:column headerText="Estado">
+									<p:button value="activo" title="activado" rendered="#{usuarioBean.activo eq 1}" disabled="true"/>
+									<p:button value="No activo" title="desactivado" rendered="#{usuarioBean.activo eq 2}" disabled="true"/>
+								</p:column>
 								<p:column headerText="Nombe">
-									<h:outputText value="#{usu.nombre}" />
+									<h:outputText value="#{usuarioBean.nombre}" />
 								</p:column>
 								<p:column headerText="Apellido">
-									<h:outputText value="#{usu.apellido}" />
+									<h:outputText value="#{usuarioBean.apellido}" />
 								</p:column>
 								<p:column headerText="Correo">
-									<h:outputText value="#{usu.correo}" />
+									<h:outputText value="#{usuarioBean.correo}" />
+								</p:column>
+								<p:column headerText="Rol">
+									<h:outputText value="#{usuarioBean.role}" />
 								</p:column>
 							</p:dataTable>
 						</p:column>
 						<p:column rowspan="1">
-
-
-
-
-
-
-
-
-
 						</p:column>
 					</p:row>
 				</p:panelGrid>
 			</h:panelGrid>
-			<p:commandLink value="cerrar"
-				action="#{homecontroller.cerrarSesion}" 
-				global="false"
-				ajax="false" />
+			<p:commandLink value="cerrar" action="#{homecontroller.cerrarSesion}"
+				global="false" ajax="false" />
 		</h:panelGrid>
 	</f:view>
 </h:form>

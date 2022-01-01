@@ -4,13 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.rexpress.beans.UserBean;
-import com.rexpress.constants.BeansName;
+import com.rexpress.constant.BeansName;
+import com.rexssecurity.services.UsuaioService;
 
 @Controller
 @Component(BeansName.BEAN_HOMECONTROLLERBEAN)
@@ -19,8 +22,11 @@ public class HomeController extends CommonController implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 		
-//	@Autowired
-//	private UsuaioService usuService;
+	@Autowired
+	private UsuaioService usuService;
+	
+	@Autowired
+	private UserBean usu;
 	
 	private ArrayList<UserBean>listaUsuariosBean;
 		
@@ -31,12 +37,15 @@ public class HomeController extends CommonController implements Serializable {
 	public String cerrarSesion(){
 			FacesContext ctx = getFacesContext();
 			HttpSession session = (HttpSession) ctx.getExternalContext().getSession(false);
+			usu.getApellido();
 			session.removeAttribute("userbean");
 			session.invalidate();
 			return "../"+LOGINVIEW+".xhtml?faces-redirect=true";
 	}
 	
 	public ArrayList<UserBean> getListaUsuariosBean() {
+		listaUsuariosBean=null;
+		listaUsuariosBean=usuService.listaUsuarios();
 		return listaUsuariosBean;
 	}
 

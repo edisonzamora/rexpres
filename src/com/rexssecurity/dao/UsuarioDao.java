@@ -8,9 +8,15 @@ import com.rexssecurity.entitys.Usuario;
 //public interface UsuarioDao extends CrudDao{
 public interface UsuarioDao{
 	
-public void crearUsuari(Usuario usuario) throws Exception;
+public void	altaUsuario(Usuario usuario) throws Exception;
+
+
 public List<Usuario> userQueryCorreo(UserBean usuario);
+
+
 public List<Usuario> usersQuery(String fitro ,String valor);
+
+public List<Usuario> listaUsuarios();
 
    
 
