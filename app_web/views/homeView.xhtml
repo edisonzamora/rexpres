@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:rpx="http://java.sun.com/jsf/composite/componentes"
+	xmlns:t="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>#{app.TITULO_APP}</title>
+	<h:outputStylesheet name="loginstyle.css" library="css"></h:outputStylesheet>
+	<style type="text/css">
+.table_menu_list {
+	margin: 0 auto;
+}
+</style>
+</h:head>
+<f:view locale="#{configapp.idiomaDefecto}">
+	<p:panelGrid id="home_panel" columns="1" style="text-align: center;">
+		<rpx:barraComponet labelTitulo="#{app.home_title}" />
+		<p:row>
+			<p:panelGrid columns="4">
+				<p:column>
+					<p:outputLabel value="#{app.home_filter}:" />
+				</p:column>
+				<p:column id="columm_select_buscador">
+					<h:form id="formSelector">
+						<p:selectOneMenu id="buscar_por"
+							value="#{homecontroller.selectCamp}" style="width:125px">
+							<f:selectItem itemLabel="#{app.home_by}" itemValue="" />
+							<f:selectItem itemLabel="#{app.home_id}" itemValue="id" />
+							<f:selectItem itemLabel="#{app.home_name}" itemValue="nombre" />
+							<f:selectItem itemLabel="#{app.home_lastname}"
+								itemValue="apellido" />
+							<f:selectItem itemLabel="#{app.home_mail}" itemValue="correo" />
+							<f:selectItem itemLabel="#{app.home_condition}"
+								itemValue="estado" />
+							<p:ajax event="itemSelect" process="buscar_por" />
+						</p:selectOneMenu>
+					</h:form>
+				</p:column>
+				<p:column colspan="1" id="columm_buscador">
+					<h:form id="formBuscador">
+						<p:inputText id="bucador" value="#{homecontroller.buscador}">
+							<p:ajax event="keyup" update="tableUsuarios"
+								listener="#{homecontroller.buscar}" />
+						</p:inputText>
+					</h:form>
+				</p:column>
+				<p:column colspan="1">
+					<h:outputText id="out_usuario"
+						value="#{homebean.userBeanHome.nombre}" />
+				</p:column>
+			</p:panelGrid>
+		</p:row>
+		<p:row>
+			<p:panelGrid columns="2">
+				<p:column>
+					<h:form id="formSelectAd">
+						<p:panelGrid columns="1">
+							<p:commandLink id="admin">
+								<h:outputText value="#{app.home_administrators}"
+									style="color: #082259 ;" />
+								<p:ajax event="click"
+									update="tableUsuarios,formSelector:buscar_por,formBuscador:bucador"
+									listener="#{homecontroller.tipoUsuario}" />
+								<f:param name="tipo" value="ADM" />
+							</p:commandLink>
+							<p:commandLink id="user">
+								<h:outputText value="#{app.home_users}" style="color: #082259 ;" />
+								<p:ajax event="click" 
+									update="tableUsuarios,formSelector:buscar_por,formBuscador:bucador"
+									listener="#{homecontroller.tipoUsuario}" />
+								<f:param name="tipo" value="USU" />
+							</p:commandLink>
+							<p:commandLink id="all">
+								<h:outputText value="all" style="color: #082259 ;" />
+								<p:ajax event="click"
+									update="tableUsuarios,formSelector:buscar_por,formBuscador:bucador"
+									listener="#{homecontroller.tipoUsuario}" />
+								<f:param name="tipo" value="all" />
+							</p:commandLink>
+						</p:panelGrid>
+					</h:form>
+				</p:column>
+				<p:column colspan="1" style="height:300px">
+					<p:dataTable var="usuarioBean"
+						value="#{homecontroller.listaUsuariosBean}" scrollable="true"
+						scrollHeight="100%" id="tableUsuarios">
+						<f:facet name="header">#{app.home_title_table_users}</f:facet>
+						<p:column headerText="#{app.home_condition}">
+							<p:button value="activo" title="activado"
+								rendered="#{usuarioBean.activo eq 1}" disabled="true"
+								style="color:blue;" />
+							<p:button value="No activo" title="desactivado"
+								rendered="#{usuarioBean.activo eq 2}" disabled="true"
+								style="color:red;" />
+							<p:button value="Editar" title="editar"/>
+								
+						</p:column>
+						<p:column headerText="#{app.home_name}" >
+							<h:outputText value="#{usuarioBean.nombre}" />
+						</p:column>
+						<p:column headerText="#{app.home_lastname}">
+							<h:outputText value="#{usuarioBean.apellido}" />
+						</p:column>
+						<p:column headerText="#{app.home_mail}">
+							<h:outputText value="#{usuarioBean.correo}"/>
+						</p:column>
+						<p:column headerText="#{app.home_role}" >
+							<h:outputText value="#{usuarioBean.role}" />
+						</p:column>
+					</p:dataTable>
+				</p:column>
+
+			</p:panelGrid>
+		</p:row>
+		<p:row >
+			<p:linkButton outcome="usuarioView" value="alta"
+				style="margin-right:20px;
+				text-align: left;" />
+		</p:row>
+	</p:panelGrid>
+</f:view>
+</html>
