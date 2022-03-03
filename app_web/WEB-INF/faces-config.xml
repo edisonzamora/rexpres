@@ -9,8 +9,8 @@
 	<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
 <!-- 	<variable-resolver>org.springframework.web.jsf.DelegatingVaribleResolver</variable-resolver>
  -->	<resource-bundle>
-			<base-name>properties.Bundle</base-name>
-			<var>build</var>
+			<base-name>properties.App</base-name>
+			<var>app</var>
 		</resource-bundle>
 		<resource-bundle>
 			<base-name>properties.Messages</base-name>
